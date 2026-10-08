@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0201">
+  <fileHeader companyName="Cooling" productName="CODESYS" productVersion="CODESYS V3.5" creationDateTime="2026-10-05T00:00:00"/>
+  <contentHeader name="Cooling" modificationDateTime="2026-10-05T00:00:00">
+    <coordinateInfo>
+      <fbd><scaling x="1" y="1"/></fbd>
+      <ld><scaling x="1" y="1"/></ld>
+      <sfc><scaling x="1" y="1"/></sfc>
+    </coordinateInfo>
+  </contentHeader>
+  <types>
+    <dataTypes><dataType name="ST_Stage"><baseType><struct><variable name="Used"><type><BOOL/></type></variable><variable name="TmOn"><type><REAL/></type></variable><variable name="TmOff"><type><REAL/></type></variable><variable name="TwOn"><type><REAL/></type></variable><variable name="TwOff"><type><REAL/></type></variable><variable name="LoadOn"><type><REAL/></type></variable><variable name="LoadOff"><type><REAL/></type></variable></struct></baseType></dataType><dataType name="ST_Analog"><baseType><struct><variable name="Eu"><type><REAL/></type></variable><variable name="Milliamp"><type><REAL/></type></variable><variable name="Fault"><type><BOOL/></type></variable></struct></baseType></dataType></dataTypes>
+    <pous><pou name="FB_Cooling" pouType="functionBlock"><interface><inputVars><variable name="dtSec"><type><REAL/></type></variable></inputVars><localVars><variable name="i"><type><INT/></type></variable><variable name="j"><type><INT/></type></variable><variable name="fans"><type><INT/></type></variable><variable name="pumps"><type><INT/></type></variable><variable name="coolers"><type><INT/></type></variable><variable name="half"><type><INT/></type></variable><variable name="cfg"><type><WORD/></type></variable><variable name="hasD2"><type><BOOL/></type></variable><variable name="hasDC"><type><BOOL/></type></variable><variable name="permit"><type><BOOL/></type></variable><variable name="transformerOn"><type><BOOL/></type></variable><variable name="tmFault"><type><BOOL/></type></variable><variable name="iFault"><type><BOOL/></type></variable><variable name="tmMeas"><type><REAL/></type></variable><variable name="iMeas"><type><REAL/></type></variable><variable name="analog"><type><derived name="ST_Analog"/></type></variable><variable name="k"><type><REAL/></type></variable><variable name="dSteady"><type><REAL/></type></variable><variable name="lim"><type><derived name="ST_Stage"/></type></variable><variable name="tableOn"><type><BOOL/></type></variable><variable name="g2"><type><BOOL/></type></variable><variable name="g3"><type><BOOL/></type></variable><variable name="g4"><type><BOOL/></type></variable><variable name="failsafe"><type><BOOL/></type></variable><variable name="run"><type><BOOL/></type></variable><variable name="reason"><type><WORD/></type></variable><variable name="healthy"><type><BOOL/></type></variable><variable name="stageName"><type><INT/></type></variable><variable name="cooler"><type><INT/></type></variable><variable name="role"><type><INT/></type></variable><variable name="demanded"><type><BOOL/></type></variable><variable name="replacement"><type><INT/></type></variable><variable name="least"><type><REAL/></type></variable><variable name="worked"><type><REAL/></type></variable><variable name="fanOk"><type><array><dimension lower="1" upper="8"/><baseType><BOOL/></baseType></array></type></variable><variable name="pumpOk"><type><array><dimension lower="1" upper="4"/><baseType><BOOL/></baseType></array></type></variable><variable name="alphaHours"><type><REAL/></type></variable></localVars><localVars retain="true" persistent="true"><variable name="ThetaR"><type><REAL/></type></variable><variable name="TwR"><type><REAL/></type></variable><variable name="TmHold"><type><REAL/></type></variable><variable name="IHold"><type><REAL/></type></variable><variable name="KHold"><type><REAL/></type></variable><variable name="LoadHold"><type><REAL/></type></variable><variable name="DeltaHold"><type><REAL/></type></variable><variable name="StageD1R"><type><BOOL/></type></variable><variable name="StageD2R"><type><BOOL/></type></variable><variable name="StageDCR"><type><BOOL/></type></variable><variable name="WarnOilR"><type><BOOL/></type></variable><variable name="AlarmOilR"><type><BOOL/></type></variable><variable name="WarnWndR"><type><BOOL/></type></variable><variable name="AlarmWndR"><type><BOOL/></type></variable><variable name="HornR"><type><BOOL/></type></variable><variable name="TmFansR"><type><BOOL/></type></variable><variable name="G2Load"><type><BOOL/></type></variable><variable name="G2Tw"><type><BOOL/></type></variable><variable name="G3Load"><type><BOOL/></type></variable><variable name="G3Tw"><type><BOOL/></type></variable><variable name="G4Load"><type><BOOL/></type></variable><variable name="G4Tw"><type><BOOL/></type></variable><variable name="FanHoursR"><type><array><dimension lower="1" upper="8"/><baseType><REAL/></baseType></array></type></variable><variable name="FanStartsR"><type><array><dimension lower="1" upper="8"/><baseType><UDINT/></baseType></array></type></variable><variable name="PumpHoursR"><type><array><dimension lower="1" upper="4"/><baseType><REAL/></baseType></array></type></variable><variable name="PumpStartsR"><type><array><dimension lower="1" upper="4"/><baseType><UDINT/></baseType></array></type></variable><variable name="PrevFan"><type><array><dimension lower="1" upper="8"/><baseType><BOOL/></baseType></array></type></variable><variable name="PrevPump"><type><array><dimension lower="1" upper="4"/><baseType><BOOL/></baseType></array></type></variable><variable name="RoleR"><type><array><dimension lower="1" upper="4"/><baseType><INT/></baseType></array></type></variable><variable name="DutyR"><type><array><dimension lower="1" upper="4"/><baseType><REAL/></baseType></array></type></variable><variable name="AppliedCoolers"><type><INT/></type><initialValue><simpleValue value="-1"/></initialValue></variable><variable name="AckPrev"><type><BOOL/></type></variable><variable name="ResetHoursPrev"><type><BOOL/></type></variable><variable name="ResetThetaPrev"><type><BOOL/></type></variable><variable name="HornOilW"><type><BOOL/></type></variable><variable name="HornOilA"><type><BOOL/></type></variable><variable name="HornWndW"><type><BOOL/></type></variable><variable name="HornWndA"><type><BOOL/></type></variable><variable name="HornTm"><type><BOOL/></type></variable><variable name="HornI"><type><BOOL/></type></variable><variable name="HornCfg"><type><BOOL/></type></variable></localVars></interface><body><ST><xhtml xmlns="http://www.w3.org/1999/xhtml">fans := GVL_Set.FanCount;
+pumps := GVL_Set.PumpCount;
+coolers := GVL_Set.CoolerCount;
+cfg := 0;
+IF (fans &lt; 0) OR (fans &gt; FAN_MAX) THEN
+    cfg := cfg OR CFG_FAN_RANGE;
+END_IF
+IF (pumps &lt; 0) OR (pumps &gt; PUMP_MAX) THEN
+    cfg := cfg OR CFG_PUMP_RANGE;
+END_IF
+IF (coolers &lt; 0) OR (coolers &gt; COOLER_MAX) THEN
+    cfg := cfg OR CFG_COOLER_RANGE;
+END_IF
+fans := LIMIT(0, fans, FAN_MAX);
+pumps := LIMIT(0, pumps, PUMP_MAX);
+coolers := LIMIT(0, coolers, COOLER_MAX);
+IF coolers * 2 &gt; fans THEN
+    cfg := cfg OR CFG_FANS_FOR_COOLER;
+    coolers := fans / 2;
+END_IF
+IF coolers &gt; pumps THEN
+    cfg := cfg OR CFG_PUMPS_FOR_COOLER;
+    coolers := pumps;
+END_IF
+IF GVL_Set.NominalCurrent &lt;= 0.0 THEN
+    cfg := cfg OR CFG_NOMINAL;
+END_IF
+IF GVL_Set.Gradient &lt; 0.0 THEN
+    cfg := cfg OR CFG_GRADIENT;
+END_IF
+
+IF coolers &lt;&gt; AppliedCoolers THEN
+    FOR i := 1 TO COOLER_MAX DO
+        IF i &lt;= coolers THEN
+            RoleR[i] := i;
+        ELSE
+            RoleR[i] := 0;
+        END_IF
+        DutyR[i] := 0.0;
+    END_FOR
+    AppliedCoolers := coolers;
+END_IF
+
+IF GVL_Set.ResetHours AND (NOT ResetHoursPrev) THEN
+    FOR i := 1 TO FAN_MAX DO
+        FanHoursR[i] := 0.0;
+        FanStartsR[i] := 0;
+    END_FOR
+    FOR i := 1 TO PUMP_MAX DO
+        PumpHoursR[i] := 0.0;
+        PumpStartsR[i] := 0;
+    END_FOR
+    FOR i := 1 TO COOLER_MAX DO
+        DutyR[i] := 0.0;
+    END_FOR
+END_IF
+ResetHoursPrev := GVL_Set.ResetHours;
+GVL_Set.ResetHours := FALSE;
+
+IF GVL_Set.ResetTheta AND (NOT ResetThetaPrev) THEN
+    ThetaR := 0.0;
+END_IF
+ResetThetaPrev := GVL_Set.ResetTheta;
+GVL_Set.ResetTheta := FALSE;
+
+analog := F_Scale(GVL_IO.AI_Tm, GVL_Set.AiMode, GVL_Set.TmAt4mA, GVL_Set.TmAt20mA);
+tmMeas := analog.Eu;
+tmFault := analog.Fault;
+TmMilliamp := analog.Milliamp;
+analog := F_Scale(GVL_IO.AI_I, GVL_Set.AiMode, 0.0, GVL_Set.IAt20mA);
+iMeas := analog.Eu;
+IF iMeas &lt; 0.0 THEN
+    iMeas := 0.0;
+END_IF
+iFault := analog.Fault;
+IMilliamp := analog.Milliamp;
+
+IF GVL_Set.Simulation THEN
+    tmMeas := GVL_Set.SimTm;
+    iMeas := GVL_Set.SimCurrent;
+    IF iMeas &lt; 0.0 THEN
+        iMeas := 0.0;
+    END_IF
+    tmFault := FALSE;
+    iFault := FALSE;
+    IF (GVL_Set.TmAt20mA - GVL_Set.TmAt4mA) &lt;&gt; 0.0 THEN
+        TmMilliamp := 4.0 + ((tmMeas - GVL_Set.TmAt4mA) / (GVL_Set.TmAt20mA - GVL_Set.TmAt4mA)) * 16.0;
+    END_IF
+    IF GVL_Set.IAt20mA &lt;&gt; 0.0 THEN
+        IMilliamp := 4.0 + (iMeas / GVL_Set.IAt20mA) * 16.0;
+    END_IF
+END_IF
+
+SensorFaultTm := tmFault;
+SensorFaultI := iFault;
+IF tmFault THEN
+    Tm := TmHold;
+ELSE
+    Tm := tmMeas;
+    TmHold := tmMeas;
+END_IF
+IF iFault THEN
+    Current := IHold;
+ELSE
+    Current := iMeas;
+    IHold := iMeas;
+END_IF
+
+IF GVL_Set.BreakerRequired THEN
+    transformerOn := GVL_IO.DI_Breaker;
+ELSE
+    transformerOn := TRUE;
+END_IF
+TransformerOn := transformerOn;
+
+IF (NOT iFault) AND (GVL_Set.NominalCurrent &gt; 0.0) THEN
+    k := Current / GVL_Set.NominalCurrent;
+    KHold := k;
+    LoadHold := k * 100.0;
+ELSE
+    k := KHold;
+END_IF
+Kfactor := KHold;
+LoadPercent := LoadHold;
+
+IF NOT iFault THEN
+    IF (GVL_Set.Gradient &gt; 0.0) AND (k &gt; 0.0) THEN
+        (* EXPT входит в библиотеку Standard среды CODESYS 3.5 ОВЕН. *)
+        dSteady := GVL_Set.Gradient * EXPT(k, GVL_Set.ExponentY);
+    ELSE
+        dSteady := 0.0;
+    END_IF
+    DeltaHold := dSteady;
+ELSE
+    dSteady := DeltaHold;
+END_IF
+DeltaSteady := dSteady;
+
+IF (NOT tmFault) AND (NOT iFault) THEN
+    ThetaR := F_Theta(ThetaR, dSteady, dtSec, GVL_Set.TauSec);
+    TwR := ThetaR + tmMeas;
+ELSIF NOT tmFault THEN
+    TwR := ThetaR + tmMeas;
+END_IF
+Theta := ThetaR;
+Tw := TwR;
+
+IF NOT tmFault THEN
+    WarnOilR := F_Hyst(WarnOilR, tmMeas, OIL_WARN_ON, OIL_WARN_OFF);
+    AlarmOilR := F_Hyst(AlarmOilR, tmMeas, OIL_ALARM_ON, OIL_ALARM_OFF);
+    TmFansR := F_Hyst(TmFansR, tmMeas, FAN_OIL_ON, FAN_OIL_OFF);
+    WarnWndR := F_Hyst(WarnWndR, TwR, WND_WARN_ON, WND_WARN_OFF);
+    AlarmWndR := F_Hyst(AlarmWndR, TwR, WND_ALARM_ON, WND_ALARM_OFF);
+END_IF
+WarnOil := WarnOilR;
+AlarmOil := AlarmOilR;
+WarnWinding := WarnWndR;
+AlarmWinding := AlarmWndR;
+TmFans := TmFansR;
+
+permit := transformerOn AND (NOT GVL_Set.Manual);
+hasD2 := (GVL_Set.CoolingType = CO_MD1D2) OR (GVL_Set.CoolingType = CO_MD1D2_DC);
+hasDC := (GVL_Set.CoolingType = CO_MD_DC) OR (GVL_Set.CoolingType = CO_MD1D2_DC);
+HasD2 := hasD2;
+HasDC := hasDC;
+
+lim := F_StageTable(GVL_Set.CoolingType, 1);
+StageD1R := F_Stage(StageD1R, TRUE, permit, Tm, Tw, LoadPercent, lim);
+lim := F_StageTable(GVL_Set.CoolingType, 2);
+StageD2R := F_Stage(StageD2R, hasD2, permit, Tm, Tw, LoadPercent, lim);
+lim := F_StageTable(GVL_Set.CoolingType, 3);
+StageDCR := F_Stage(StageDCR, hasDC, permit, Tm, Tw, LoadPercent, lim);
+StageD1 := StageD1R;
+StageD2 := StageD2R;
+StageDC := StageDCR;
+
+IF (NOT iFault) AND (NOT tmFault) THEN
+    G2Load := F_Hyst(G2Load, LoadPercent, G2_LOAD_ON, G2_LOAD_OFF);
+    G2Tw := F_Hyst(G2Tw, Tw, G2_TW_ON, G2_TW_OFF);
+    G3Load := F_Hyst(G3Load, LoadPercent, G3_LOAD_ON, G3_LOAD_OFF);
+    G3Tw := F_Hyst(G3Tw, Tw, G3_TW_ON, G3_TW_OFF);
+    G4Load := F_Hyst(G4Load, LoadPercent, G4_LOAD_ON, G4_LOAD_OFF);
+    G4Tw := F_Hyst(G4Tw, Tw, G4_TW_ON, G4_TW_OFF);
+END_IF
+g2 := G2Load OR G2Tw;
+g3 := G3Load OR G3Tw;
+g4 := G4Load OR G4Tw;
+tableOn := GVL_Set.UseTable4 AND hasDC AND (coolers &gt; 0) AND permit;
+GroupPump[1] := tableOn AND (GVL_Set.Group1AtIdle OR StageDCR OR g2 OR g3 OR g4);
+GroupPump[2] := tableOn AND g2;
+GroupPump[3] := tableOn AND g3;
+GroupPump[4] := tableOn AND g4;
+
+failsafe := permit AND (tmFault OR iFault OR AlarmOilR OR AlarmWndR);
+Failsafe := failsafe;
+
+fanOk[1] := GVL_IO.DI_FanOk1;
+fanOk[2] := GVL_IO.DI_FanOk2;
+fanOk[3] := GVL_IO.DI_FanOk3;
+fanOk[4] := GVL_IO.DI_FanOk4;
+fanOk[5] := GVL_IO.DI_FanOk5;
+fanOk[6] := GVL_IO.DI_FanOk6;
+fanOk[7] := GVL_IO.DI_FanOk7;
+fanOk[8] := GVL_IO.DI_FanOk8;
+pumpOk[1] := GVL_IO.DI_PumpOk1;
+pumpOk[2] := GVL_IO.DI_PumpOk2;
+pumpOk[3] := GVL_IO.DI_PumpOk3;
+pumpOk[4] := GVL_IO.DI_PumpOk4;
+
+FOR i := 1 TO PUMP_MAX DO
+    PumpFault[i] := (i &lt;= pumps) AND GVL_Set.UseMotorFaults AND (NOT pumpOk[i]);
+END_FOR
+
+(* Ротация: смена вступает в силу на этом цикле, если наработка уже набрана. *)
+IF permit AND GVL_Set.UseTable4 AND (coolers &gt;= 2) THEN
+    FOR i := 1 TO coolers DO
+        role := RoleR[i];
+        demanded := FALSE;
+        IF (role &gt;= 1) AND (role &lt;= 4) THEN
+            demanded := GroupPump[role];
+        END_IF
+        IF demanded AND (PumpFault[i] OR ((GVL_Set.RotationHours &gt; 0.0) AND (DutyR[i] &gt;= GVL_Set.RotationHours))) THEN
+            replacement := 0;
+            least := 999999.0;
+            FOR j := 1 TO coolers DO
+                IF j &lt;&gt; i THEN
+                    role := RoleR[j];
+                    demanded := FALSE;
+                    IF (role &gt;= 1) AND (role &lt;= 4) THEN
+                        demanded := GroupPump[role];
+                    END_IF
+                    IF (NOT demanded) AND (NOT PumpFault[j]) AND (PumpHoursR[j] &lt; least) THEN
+                        least := PumpHoursR[j];
+                        replacement := j;
+                    END_IF
+                END_IF
+            END_FOR
+            IF replacement &lt;&gt; 0 THEN
+                role := RoleR[i];
+                RoleR[i] := RoleR[replacement];
+                RoleR[replacement] := role;
+                DutyR[i] := 0.0;
+                DutyR[replacement] := 0.0;
+                EXIT;
+            END_IF
+        END_IF
+    END_FOR
+END_IF
+
+IF fans &gt; 0 THEN
+    half := (fans + 1) / 2;
+ELSE
+    half := 0;
+END_IF
+
+FOR i := 1 TO FAN_MAX DO
+    reason := 0;
+    run := FALSE;
+    healthy := (NOT GVL_Set.UseMotorFaults) OR fanOk[i];
+    FanFault[i] := (i &lt;= fans) AND GVL_Set.UseMotorFaults AND (NOT fanOk[i]);
+    IF i &gt; fans THEN
+        run := FALSE;
+    ELSIF GVL_Set.Manual THEN
+        run := GVL_Set.ManualFan[i] AND healthy;
+        IF run THEN
+            reason := reason OR R_MANUAL;
+        END_IF
+        IF NOT healthy THEN
+            reason := reason OR R_THERMAL;
+        END_IF
+    ELSIF NOT transformerOn THEN
+        reason := reason OR R_BREAKER;
+    ELSIF NOT healthy THEN
+        reason := reason OR R_THERMAL;
+    ELSIF failsafe THEN
+        run := TRUE;
+        IF tmFault OR iFault THEN
+            reason := reason OR R_SENSOR;
+        END_IF
+        IF AlarmOilR OR AlarmWndR THEN
+            reason := reason OR R_OVERTEMP;
+        END_IF
+    ELSE
+        IF hasD2 AND (i &gt; half) THEN
+            stageName := 2;
+        ELSE
+            stageName := 1;
+        END_IF
+        IF ((stageName = 1) AND StageD1R) OR ((stageName = 2) AND StageD2R) THEN
+            run := TRUE;
+            IF stageName = 1 THEN
+                reason := reason OR R_D1;
+            ELSE
+                reason := reason OR R_D2;
+            END_IF
+        END_IF
+        cooler := (i + 1) / 2;
+        IF (cooler &gt;= 1) AND (cooler &lt;= coolers) AND tableOn THEN
+            role := RoleR[cooler];
+            IF (role &gt;= 1) AND (role &lt;= 4) AND TmFansR THEN
+                IF GroupPump[role] THEN
+                    run := TRUE;
+                    reason := reason OR R_GROUP_FAN;
+                END_IF
+            END_IF
+        END_IF
+    END_IF
+    IF run AND (NOT PrevFan[i]) THEN
+        FanStartsR[i] := FanStartsR[i] + 1;
+    END_IF
+    IF run AND (dtSec &gt; 0.0) THEN
+        FanHoursR[i] := FanHoursR[i] + dtSec / 3600.0;
+    END_IF
+    PrevFan[i] := run;
+    FanRun[i] := run;
+    FanReason[i] := reason;
+    FanHours[i] := FanHoursR[i];
+    FanStarts[i] := FanStartsR[i];
+END_FOR
+
+FOR i := 1 TO PUMP_MAX DO
+    reason := 0;
+    run := FALSE;
+    healthy := (NOT GVL_Set.UseMotorFaults) OR pumpOk[i];
+    IF (NOT hasDC) AND (i &lt;= pumps) AND (NOT GVL_Set.Manual) THEN
+        reason := R_UNUSED;
+    ELSIF i &gt; pumps THEN
+        run := FALSE;
+    ELSIF GVL_Set.Manual THEN
+        run := GVL_Set.ManualPump[i] AND healthy;
+        IF run THEN
+            reason := reason OR R_MANUAL;
+        END_IF
+        IF NOT healthy THEN
+            reason := reason OR R_THERMAL;
+        END_IF
+    ELSIF NOT transformerOn THEN
+        reason := reason OR R_BREAKER;
+    ELSIF NOT healthy THEN
+        reason := reason OR R_THERMAL;
+    ELSIF failsafe AND hasDC AND (i &lt;= pumps) THEN
+        run := TRUE;
+        IF tmFault OR iFault THEN
+            reason := reason OR R_SENSOR;
+        END_IF
+        IF AlarmOilR OR AlarmWndR THEN
+            reason := reason OR R_OVERTEMP;
+        END_IF
+    ELSIF hasDC AND (i &lt;= pumps) THEN
+        IF (i &lt;= coolers) AND tableOn THEN
+            role := RoleR[i];
+            IF (role &gt;= 1) AND (role &lt;= 4) THEN
+                IF GroupPump[role] THEN
+                    run := TRUE;
+                    reason := reason OR R_GROUP_PUMP;
+                END_IF
+            END_IF
+        ELSIF StageDCR THEN
+            run := TRUE;
+            reason := reason OR R_DC;
+        END_IF
+    END_IF
+    IF run AND (NOT PrevPump[i]) THEN
+        PumpStartsR[i] := PumpStartsR[i] + 1;
+    END_IF
+    IF run AND (dtSec &gt; 0.0) THEN
+        PumpHoursR[i] := PumpHoursR[i] + dtSec / 3600.0;
+    END_IF
+    PrevPump[i] := run;
+    PumpRun[i] := run;
+    PumpReason[i] := reason;
+    PumpHours[i] := PumpHoursR[i];
+    PumpStarts[i] := PumpStartsR[i];
+END_FOR
+
+IF permit AND GVL_Set.UseTable4 AND (dtSec &gt; 0.0) THEN
+    alphaHours := dtSec / 3600.0;
+    FOR i := 1 TO coolers DO
+        IF PumpRun[i] THEN
+            DutyR[i] := DutyR[i] + alphaHours;
+        END_IF
+    END_FOR
+END_IF
+
+FOR i := 1 TO COOLER_MAX DO
+    CoolerRole[i] := RoleR[i];
+    CoolerDutyHours[i] := DutyR[i];
+END_FOR
+EffFanCount := fans;
+EffPumpCount := pumps;
+EffCoolerCount := coolers;
+ConfigBits := cfg;
+
+IF (WarnOilR AND NOT HornOilW) OR (AlarmOilR AND NOT HornOilA) OR (WarnWndR AND NOT HornWndW) OR (AlarmWndR AND NOT HornWndA) OR (tmFault AND NOT HornTm) OR (iFault AND NOT HornI) OR ((cfg &lt;&gt; 0) AND NOT HornCfg) THEN
+    HornR := TRUE;
+END_IF
+HornOilW := WarnOilR;
+HornOilA := AlarmOilR;
+HornWndW := WarnWndR;
+HornWndA := AlarmWndR;
+HornTm := tmFault;
+HornI := iFault;
+HornCfg := cfg &lt;&gt; 0;
+IF GVL_Set.Ack AND (NOT AckPrev) THEN
+    HornR := FALSE;
+END_IF
+AckPrev := GVL_Set.Ack;
+GVL_Set.Ack := FALSE;
+Horn := HornR;</xhtml></ST></body></pou><pou name="F_Hyst" pouType="function"><interface><returnType><BOOL/></returnType><inputVars><variable name="Prev"><type><BOOL/></type></variable><variable name="Value"><type><REAL/></type></variable><variable name="LevelOn"><type><REAL/></type></variable><variable name="LevelOff"><type><REAL/></type></variable></inputVars></interface><body><ST><xhtml xmlns="http://www.w3.org/1999/xhtml">IF (NOT Prev) AND (Value &gt;= LevelOn) THEN
+    F_Hyst := TRUE;
+ELSIF Prev AND (Value &lt;= LevelOff) THEN
+    F_Hyst := FALSE;
+ELSE
+    F_Hyst := Prev;
+END_IF</xhtml></ST></body></pou><pou name="F_JoinReal" pouType="function"><interface><returnType><REAL/></returnType><inputVars><variable name="Hi"><type><WORD/></type></variable><variable name="Lo"><type><WORD/></type></variable><variable name="Swap"><type><BOOL/></type></variable></inputVars><localVars><variable name="tmp"><type><REAL/></type></variable><variable name="pw"><type><pointer><baseType><WORD/></baseType></pointer></type></variable></localVars></interface><body><ST><xhtml xmlns="http://www.w3.org/1999/xhtml">tmp := 0.0;
+pw := ADR(tmp);
+IF Swap THEN
+    pw^ := Hi;
+    pw := pw + 1;
+    pw^ := Lo;
+ELSE
+    pw^ := Lo;
+    pw := pw + 1;
+    pw^ := Hi;
+END_IF
+F_JoinReal := tmp;</xhtml></ST></body></pou><pou name="F_Scale" pouType="function"><interface><returnType><derived name="ST_Analog"/></returnType><inputVars><variable name="Raw"><type><REAL/></type></variable><variable name="Mode"><type><INT/></type></variable><variable name="EuAt4"><type><REAL/></type></variable><variable name="EuAt20"><type><REAL/></type></variable></inputVars><localVars><variable name="result"><type><derived name="ST_Analog"/></type></variable><variable name="percent"><type><REAL/></type></variable></localVars></interface><body><ST><xhtml xmlns="http://www.w3.org/1999/xhtml">(* ПЛК210-04, сигнал «Ток 4…20 мА»: канал отдаёт REAL 0…100 %, не миллиамперы.
+   Обрыв линии уходит ниже 0 % (порог −1 % ≈ 3,8 мА), перегруз — выше 103 % ≈ 20,5 мА.
+   Неиспользуемые AI3 и AI4 нужно выключить: контроллер опрашивает входы по очереди. *)
+IF Mode = 1 THEN
+    result.Milliamp := Raw;
+    percent := ((Raw - 4.0) / 16.0) * 100.0;
+ELSE
+    percent := Raw;
+    result.Milliamp := 4.0 + (percent / 100.0) * 16.0;
+END_IF
+result.Fault := (percent &lt; -1.0) OR (percent &gt; 103.0);
+result.Eu := EuAt4 + (percent / 100.0) * (EuAt20 - EuAt4);
+F_Scale := result;</xhtml></ST></body></pou><pou name="F_SplitReal" pouType="function"><interface><returnType><BOOL/></returnType><inputVars><variable name="Value"><type><REAL/></type></variable></inputVars><outputVars><variable name="Hi"><type><WORD/></type></variable><variable name="Lo"><type><WORD/></type></variable></outputVars><localVars><variable name="tmp"><type><REAL/></type></variable><variable name="pw"><type><pointer><baseType><WORD/></baseType></pointer></type></variable></localVars></interface><body><ST><xhtml xmlns="http://www.w3.org/1999/xhtml">(* Память ПЛК210 little-endian: первое слово REAL — младшее. *)
+tmp := Value;
+pw := ADR(tmp);
+Lo := pw^;
+pw := pw + 1;
+Hi := pw^;
+F_SplitReal := TRUE;</xhtml></ST></body></pou><pou name="F_Stage" pouType="function"><interface><returnType><BOOL/></returnType><inputVars><variable name="Prev"><type><BOOL/></type></variable><variable name="Enabled"><type><BOOL/></type></variable><variable name="Permit"><type><BOOL/></type></variable><variable name="Tm"><type><REAL/></type></variable><variable name="Tw"><type><REAL/></type></variable><variable name="LoadPct"><type><REAL/></type></variable><variable name="Limits"><type><derived name="ST_Stage"/></type></variable></inputVars><localVars><variable name="turnOn"><type><BOOL/></type></variable><variable name="turnOff"><type><BOOL/></type></variable></localVars></interface><body><ST><xhtml xmlns="http://www.w3.org/1999/xhtml">(* Включение по любому из трёх условий, отключение когда все три не выше уставок «откл.». *)
+IF (NOT Enabled) OR (NOT Permit) OR (NOT Limits.Used) THEN
+    F_Stage := FALSE;
+    RETURN;
+END_IF
+turnOn := (Tm &gt;= Limits.TmOn) OR (Tw &gt;= Limits.TwOn) OR (LoadPct &gt;= Limits.LoadOn);
+turnOff := (Tm &lt;= Limits.TmOff) AND (Tw &lt;= Limits.TwOff) AND (LoadPct &lt;= Limits.LoadOff);
+IF (NOT Prev) AND turnOn THEN
+    F_Stage := TRUE;
+ELSIF Prev AND turnOff THEN
+    F_Stage := FALSE;
+ELSE
+    F_Stage := Prev;
+END_IF</xhtml></ST></body></pou><pou name="F_StageTable" pouType="function"><interface><returnType><derived name="ST_Stage"/></returnType><inputVars><variable name="CoolingType"><type><INT/></type></variable><variable name="Stage"><type><INT/></type></variable></inputVars><localVars><variable name="row"><type><derived name="ST_Stage"/></type></variable></localVars></interface><body><ST><xhtml xmlns="http://www.w3.org/1999/xhtml">row.Used := FALSE;
+IF Stage = 1 THEN
+    row.Used := TRUE;
+    row.TmOn := 55.0;
+    row.TmOff := 50.0;
+    row.TwOn := 75.0;
+    row.TwOff := 70.0;
+    row.LoadOn := 80.0;
+    row.LoadOff := 75.0;
+ELSIF Stage = 2 THEN
+    IF CoolingType = CO_MD1D2 THEN
+        row.Used := TRUE;
+        row.TmOn := 65.0;
+        row.TmOff := 60.0;
+        row.TwOn := 85.0;
+        row.TwOff := 80.0;
+        row.LoadOn := 105.0;
+        row.LoadOff := 100.0;
+    ELSIF CoolingType = CO_MD1D2_DC THEN
+        row.Used := TRUE;
+        row.TmOn := 65.0;
+        row.TmOff := 60.0;
+        row.TwOn := 85.0;
+        row.TwOff := 80.0;
+        row.LoadOn := 90.0;
+        row.LoadOff := 85.0;
+    END_IF
+    (* У М/Д/ДЦ строка Д2 на листе пустая — ступень не используется. *)
+ELSIF Stage = 3 THEN
+    IF (CoolingType = CO_MD_DC) OR (CoolingType = CO_MD1D2_DC) THEN
+        row.Used := TRUE;
+        row.TmOn := 75.0;
+        row.TmOff := 70.0;
+        row.TwOn := 90.0;
+        row.TwOff := 85.0;
+        row.LoadOn := 105.0;
+        row.LoadOff := 100.0;
+    END_IF
+END_IF
+F_StageTable := row;</xhtml></ST></body></pou><pou name="F_Theta" pouType="function"><interface><returnType><REAL/></returnType><inputVars><variable name="Theta"><type><REAL/></type></variable><variable name="DeltaSteady"><type><REAL/></type></variable><variable name="dtSec"><type><REAL/></type></variable><variable name="TauSec"><type><REAL/></type></variable></inputVars><localVars><variable name="alpha"><type><REAL/></type></variable></localVars></interface><body><ST><xhtml xmlns="http://www.w3.org/1999/xhtml">(* Шаг формулы To = ΔT·(1 − e^(−t/τ)) + Tm.
+   При скачке нагрузки это апериодическое звено, а не время от включения контроллера. *)
+IF (dtSec &gt; 0.0) AND (TauSec &gt; 0.0) THEN
+    alpha := 1.0 - EXP(-dtSec / TauSec);
+    F_Theta := Theta + (DeltaSteady - Theta) * alpha;
+ELSE
+    F_Theta := Theta;
+END_IF</xhtml></ST></body></pou><pou name="PRG_Cooling" pouType="program"><interface><localVars><variable name="ctrl"><type><derived name="FB_Cooling"/></type></variable><variable name="tNow"><type><DWORD/></type></variable><variable name="tPrev"><type><DWORD/></type></variable><variable name="dtMs"><type><DWORD/></type></variable><variable name="dtSec"><type><REAL/></type></variable><variable name="first"><type><BOOL/></type><initialValue><simpleValue value="TRUE"/></initialValue></variable><variable name="hi"><type><WORD/></type></variable><variable name="lo"><type><WORD/></type></variable><variable name="ok"><type><BOOL/></type></variable><variable name="i"><type><INT/></type></variable><variable name="addr"><type><INT/></type></variable><variable name="bits"><type><WORD/></type></variable><variable name="flags"><type><WORD/></type></variable><variable name="strobe"><type><WORD/></type></variable></localVars></interface><body><ST><xhtml xmlns="http://www.w3.org/1999/xhtml">(* В задаче Main: только эта программа. Цикл 100 мс.
+   Аналоговые входы ПЛК210-04 обновляются сами, до 0,6 с на включённый канал,
+   и между опросами держат прошлое значение. Время нагрева обмотки считается
+   по циклу задачи, а не по периоду АЦП.
+   Среда — CODESYS V3.5 ОВЕН для устройства ПЛК210-04-CS. Пустой цикл
+   контроллера около 3 мс, такт 100 мс для реле достаточен: контакт
+   переключается до 10 мс. Память RETAIN PERSISTENT лежит в MRAM 64 Кбайт.
+   Три клиента смотрят одни и те же переменные:
+   веб-браузер — WebVisu, переменные GVL_Visu / GVL_HMI / GVL_Set;
+   панель СП307 — Modbus TCP, команды в MB[100];
+   верхний уровень — чтение MB[0]…MB[91] и действующих уставок MB[128]…MB[171]. *)
+
+strobe := MB[100];
+IF strobe = 1 THEN
+    CoolingType := LIMIT(1, WORD_TO_INT(MB[101]), 4);
+    Gradient := F_JoinReal(MB[102], MB[103], SwapWords);
+    NominalCurrent := F_JoinReal(MB[104], MB[105], SwapWords);
+    FanCount := LIMIT(0, WORD_TO_INT(MB[106]), FAN_MAX);
+    PumpCount := LIMIT(0, WORD_TO_INT(MB[107]), PUMP_MAX);
+    CoolerCount := LIMIT(0, WORD_TO_INT(MB[108]), COOLER_MAX);
+    RotationHours := F_JoinReal(MB[109], MB[110], SwapWords);
+    TmAt4mA := F_JoinReal(MB[111], MB[112], SwapWords);
+    TmAt20mA := F_JoinReal(MB[113], MB[114], SwapWords);
+    IAt20mA := F_JoinReal(MB[115], MB[116], SwapWords);
+    flags := MB[117];
+    BreakerRequired := (flags AND WORD#16#0001) &lt;&gt; WORD#0;
+    UseTable4 := (flags AND WORD#16#0002) &lt;&gt; WORD#0;
+    Group1AtIdle := (flags AND WORD#16#0004) &lt;&gt; WORD#0;
+    UseMotorFaults := (flags AND WORD#16#0008) &lt;&gt; WORD#0;
+    Simulation := (flags AND WORD#16#0010) &lt;&gt; WORD#0;
+    Manual := (flags AND WORD#16#0020) &lt;&gt; WORD#0;
+    IF (flags AND WORD#16#0040) &lt;&gt; WORD#0 THEN
+        AiMode := 1;
+    ELSE
+        AiMode := 0;
+    END_IF
+    SwapWords := (flags AND WORD#16#0080) &lt;&gt; WORD#0;
+    SimTm := F_JoinReal(MB[118], MB[119], SwapWords);
+    SimCurrent := F_JoinReal(MB[120], MB[121], SwapWords);
+    FOR i := 1 TO FAN_MAX DO
+        ManualFan[i] := (MB[122] AND SHL(WORD#1, i - 1)) &lt;&gt; WORD#0;
+    END_FOR
+    FOR i := 1 TO PUMP_MAX DO
+        ManualPump[i] := (MB[123] AND SHL(WORD#1, i - 1)) &lt;&gt; WORD#0;
+    END_FOR
+    ExponentY := F_JoinReal(MB[124], MB[125], SwapWords);
+    TauSec := F_JoinReal(MB[126], MB[127], SwapWords);
+    IF ExponentY &lt;= 0.0 THEN
+        ExponentY := 1.2;
+    END_IF
+    IF TauSec &lt;= 0.0 THEN
+        TauSec := 480.0;
+    END_IF
+ELSIF strobe = 2 THEN
+    Ack := TRUE;
+ELSIF strobe = 3 THEN
+    ResetHours := TRUE;
+ELSIF strobe = 4 THEN
+    ResetTheta := TRUE;
+END_IF
+IF strobe &lt;&gt; 0 THEN
+    MB[100] := 0;
+END_IF
+
+(* Кнопки WebVisu. Сброс в этом же цикле, иначе Tap останется нажат. *)
+IF BtnAck THEN
+    Ack := TRUE;
+    BtnAck := FALSE;
+END_IF
+IF BtnResetHours THEN
+    ResetHours := TRUE;
+    BtnResetHours := FALSE;
+END_IF
+IF BtnResetTheta THEN
+    ResetTheta := TRUE;
+    BtnResetTheta := FALSE;
+END_IF
+
+tNow := TIME_TO_DWORD(TIME());
+dtMs := tNow - tPrev;
+tPrev := tNow;
+IF first OR (dtMs &gt; 2000) THEN
+    dtSec := 0.0;
+    first := FALSE;
+ELSE
+    dtSec := DWORD_TO_REAL(dtMs) / 1000.0;
+END_IF
+
+ctrl(dtSec := dtSec);
+
+DO_Fan1 := FanRun[1];
+DO_Fan2 := FanRun[2];
+DO_Fan3 := FanRun[3];
+DO_Fan4 := FanRun[4];
+DO_Fan5 := FanRun[5];
+DO_Fan6 := FanRun[6];
+DO_Fan7 := FanRun[7];
+DO_Fan8 := FanRun[8];
+DO_Pump1 := PumpRun[1];
+DO_Pump2 := PumpRun[2];
+DO_Pump3 := PumpRun[3];
+DO_Pump4 := PumpRun[4];
+
+ok := F_SplitReal(Value := Tm, Hi =&gt; hi, Lo =&gt; lo);
+MB[0] := SEL(SwapWords, hi, lo);
+MB[1] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := Current, Hi =&gt; hi, Lo =&gt; lo);
+MB[2] := SEL(SwapWords, hi, lo);
+MB[3] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := Tw, Hi =&gt; hi, Lo =&gt; lo);
+MB[4] := SEL(SwapWords, hi, lo);
+MB[5] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := LoadPercent, Hi =&gt; hi, Lo =&gt; lo);
+MB[6] := SEL(SwapWords, hi, lo);
+MB[7] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := Kfactor, Hi =&gt; hi, Lo =&gt; lo);
+MB[8] := SEL(SwapWords, hi, lo);
+MB[9] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := DeltaSteady, Hi =&gt; hi, Lo =&gt; lo);
+MB[10] := SEL(SwapWords, hi, lo);
+MB[11] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := Theta, Hi =&gt; hi, Lo =&gt; lo);
+MB[12] := SEL(SwapWords, hi, lo);
+MB[13] := SEL(SwapWords, lo, hi);
+
+MB[14] := INT_TO_WORD(CoolingType);
+
+bits := 0;
+IF SensorFaultTm THEN bits := bits OR WORD#16#0001; END_IF
+IF SensorFaultI THEN bits := bits OR WORD#16#0002; END_IF
+IF ConfigBits &lt;&gt; 0 THEN bits := bits OR WORD#16#0004; END_IF
+IF TransformerOn THEN bits := bits OR WORD#16#0008; END_IF
+IF Failsafe THEN bits := bits OR WORD#16#0010; END_IF
+IF Horn THEN bits := bits OR WORD#16#0020; END_IF
+IF Manual THEN bits := bits OR WORD#16#0040; END_IF
+IF Simulation THEN bits := bits OR WORD#16#0080; END_IF
+IF StageD1 THEN bits := bits OR WORD#16#0100; END_IF
+IF StageD2 THEN bits := bits OR WORD#16#0200; END_IF
+IF StageDC THEN bits := bits OR WORD#16#0400; END_IF
+IF GroupPump[1] THEN bits := bits OR WORD#16#0800; END_IF
+IF GroupPump[2] THEN bits := bits OR WORD#16#1000; END_IF
+IF GroupPump[3] THEN bits := bits OR WORD#16#2000; END_IF
+IF GroupPump[4] THEN bits := bits OR WORD#16#4000; END_IF
+IF TmFans THEN bits := bits OR WORD#16#8000; END_IF
+MB[15] := bits;
+
+bits := 0;
+IF WarnOil THEN bits := bits OR WORD#16#0001; END_IF
+IF AlarmOil THEN bits := bits OR WORD#16#0002; END_IF
+IF WarnWinding THEN bits := bits OR WORD#16#0004; END_IF
+IF AlarmWinding THEN bits := bits OR WORD#16#0008; END_IF
+FOR i := 1 TO FAN_MAX DO
+    IF FanFault[i] THEN bits := bits OR WORD#16#0010; END_IF
+END_FOR
+FOR i := 1 TO PUMP_MAX DO
+    IF PumpFault[i] THEN bits := bits OR WORD#16#0010; END_IF
+END_FOR
+MB[16] := bits;
+
+bits := 0;
+FOR i := 1 TO FAN_MAX DO
+    IF FanRun[i] THEN bits := bits OR SHL(WORD#1, i - 1); END_IF
+END_FOR
+MB[17] := bits;
+bits := 0;
+FOR i := 1 TO PUMP_MAX DO
+    IF PumpRun[i] THEN bits := bits OR SHL(WORD#1, i - 1); END_IF
+END_FOR
+MB[18] := bits;
+
+Heartbeat := DWORD_TO_WORD(WORD_TO_DWORD(Heartbeat) + 1);
+MB[19] := Heartbeat;
+
+addr := 20;
+FOR i := 1 TO FAN_MAX DO
+    ok := F_SplitReal(Value := FanHours[i], Hi =&gt; hi, Lo =&gt; lo);
+    MB[addr] := SEL(SwapWords, hi, lo);
+    MB[addr + 1] := SEL(SwapWords, lo, hi);
+    addr := addr + 2;
+END_FOR
+addr := 36;
+FOR i := 1 TO FAN_MAX DO
+    (* UDINT в двух словах: старшее слово по младшему адресу, как у REAL. *)
+    lo := DWORD_TO_WORD(UDINT_TO_DWORD(FanStarts[i]) AND DWORD#16#FFFF);
+    hi := DWORD_TO_WORD(SHR(UDINT_TO_DWORD(FanStarts[i]), 16));
+    IF SwapWords THEN
+        MB[addr] := lo;
+        MB[addr + 1] := hi;
+    ELSE
+        MB[addr] := hi;
+        MB[addr + 1] := lo;
+    END_IF
+    addr := addr + 2;
+END_FOR
+
+addr := 52;
+FOR i := 1 TO PUMP_MAX DO
+    ok := F_SplitReal(Value := PumpHours[i], Hi =&gt; hi, Lo =&gt; lo);
+    MB[addr] := SEL(SwapWords, hi, lo);
+    MB[addr + 1] := SEL(SwapWords, lo, hi);
+    addr := addr + 2;
+END_FOR
+addr := 60;
+FOR i := 1 TO PUMP_MAX DO
+    lo := DWORD_TO_WORD(UDINT_TO_DWORD(PumpStarts[i]) AND DWORD#16#FFFF);
+    hi := DWORD_TO_WORD(SHR(UDINT_TO_DWORD(PumpStarts[i]), 16));
+    IF SwapWords THEN
+        MB[addr] := lo;
+        MB[addr + 1] := hi;
+    ELSE
+        MB[addr] := hi;
+        MB[addr + 1] := lo;
+    END_IF
+    addr := addr + 2;
+END_FOR
+addr := 68;
+FOR i := 1 TO COOLER_MAX DO
+    ok := F_SplitReal(Value := CoolerDutyHours[i], Hi =&gt; hi, Lo =&gt; lo);
+    MB[addr] := SEL(SwapWords, hi, lo);
+    MB[addr + 1] := SEL(SwapWords, lo, hi);
+    addr := addr + 2;
+END_FOR
+FOR i := 1 TO COOLER_MAX DO
+    MB[75 + i] := INT_TO_WORD(CoolerRole[i]);
+END_FOR
+ok := F_SplitReal(Value := TmMilliamp, Hi =&gt; hi, Lo =&gt; lo);
+MB[80] := SEL(SwapWords, hi, lo);
+MB[81] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := IMilliamp, Hi =&gt; hi, Lo =&gt; lo);
+MB[82] := SEL(SwapWords, hi, lo);
+MB[83] := SEL(SwapWords, lo, hi);
+MB[84] := INT_TO_WORD(EffFanCount);
+MB[85] := INT_TO_WORD(EffPumpCount);
+MB[86] := INT_TO_WORD(EffCoolerCount);
+MB[87] := ConfigBits;
+ok := F_SplitReal(Value := MB_PROBE, Hi =&gt; hi, Lo =&gt; lo);
+MB[90] := SEL(SwapWords, hi, lo);
+MB[91] := SEL(SwapWords, lo, hi);
+
+(* Действующие уставки. Буфер записи 101…127 программа не перезаписывает,
+   чтобы недописанный кадр панели не затирался. Верхний уровень и экран
+   «как сейчас» читают 128…155. *)
+MB[128] := INT_TO_WORD(CoolingType);
+ok := F_SplitReal(Value := Gradient, Hi =&gt; hi, Lo =&gt; lo);
+MB[129] := SEL(SwapWords, hi, lo);
+MB[130] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := NominalCurrent, Hi =&gt; hi, Lo =&gt; lo);
+MB[131] := SEL(SwapWords, hi, lo);
+MB[132] := SEL(SwapWords, lo, hi);
+MB[133] := INT_TO_WORD(FanCount);
+MB[134] := INT_TO_WORD(PumpCount);
+MB[135] := INT_TO_WORD(CoolerCount);
+ok := F_SplitReal(Value := RotationHours, Hi =&gt; hi, Lo =&gt; lo);
+MB[136] := SEL(SwapWords, hi, lo);
+MB[137] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := TmAt4mA, Hi =&gt; hi, Lo =&gt; lo);
+MB[138] := SEL(SwapWords, hi, lo);
+MB[139] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := TmAt20mA, Hi =&gt; hi, Lo =&gt; lo);
+MB[140] := SEL(SwapWords, hi, lo);
+MB[141] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := IAt20mA, Hi =&gt; hi, Lo =&gt; lo);
+MB[142] := SEL(SwapWords, hi, lo);
+MB[143] := SEL(SwapWords, lo, hi);
+flags := 0;
+IF BreakerRequired THEN flags := flags OR WORD#16#0001; END_IF
+IF UseTable4 THEN flags := flags OR WORD#16#0002; END_IF
+IF Group1AtIdle THEN flags := flags OR WORD#16#0004; END_IF
+IF UseMotorFaults THEN flags := flags OR WORD#16#0008; END_IF
+IF Simulation THEN flags := flags OR WORD#16#0010; END_IF
+IF Manual THEN flags := flags OR WORD#16#0020; END_IF
+IF AiMode = 1 THEN flags := flags OR WORD#16#0040; END_IF
+IF SwapWords THEN flags := flags OR WORD#16#0080; END_IF
+MB[144] := flags;
+ok := F_SplitReal(Value := SimTm, Hi =&gt; hi, Lo =&gt; lo);
+MB[145] := SEL(SwapWords, hi, lo);
+MB[146] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := SimCurrent, Hi =&gt; hi, Lo =&gt; lo);
+MB[147] := SEL(SwapWords, hi, lo);
+MB[148] := SEL(SwapWords, lo, hi);
+bits := 0;
+FOR i := 1 TO FAN_MAX DO
+    IF ManualFan[i] THEN bits := bits OR SHL(WORD#1, i - 1); END_IF
+END_FOR
+MB[149] := bits;
+bits := 0;
+FOR i := 1 TO PUMP_MAX DO
+    IF ManualPump[i] THEN bits := bits OR SHL(WORD#1, i - 1); END_IF
+END_FOR
+MB[150] := bits;
+ok := F_SplitReal(Value := ExponentY, Hi =&gt; hi, Lo =&gt; lo);
+MB[151] := SEL(SwapWords, hi, lo);
+MB[152] := SEL(SwapWords, lo, hi);
+ok := F_SplitReal(Value := TauSec, Hi =&gt; hi, Lo =&gt; lo);
+MB[153] := SEL(SwapWords, hi, lo);
+MB[154] := SEL(SwapWords, lo, hi);
+FOR i := 1 TO FAN_MAX DO
+    MB[159 + i] := FanReason[i];
+END_FOR
+FOR i := 1 TO PUMP_MAX DO
+    MB[167 + i] := PumpReason[i];
+END_FOR
+
+IF ConfigBits &lt;&gt; 0 THEN
+    BannerCode := 7;
+ELSIF SensorFaultTm OR SensorFaultI THEN
+    BannerCode := 6;
+ELSIF AlarmOil THEN
+    BannerCode := 2;
+ELSIF AlarmWinding THEN
+    BannerCode := 3;
+ELSIF WarnOil THEN
+    BannerCode := 4;
+ELSIF WarnWinding THEN
+    BannerCode := 5;
+ELSIF NOT TransformerOn THEN
+    BannerCode := 8;
+ELSIF Manual THEN
+    BannerCode := 9;
+ELSE
+    BannerCode := 0;
+END_IF</xhtml></ST></body></pou></pous>
+  </types>
+  <instances>
+    <configurations>
+      <configuration name="CoolingImport">
+        <resource name="Application">
+          <globalVars name="GVL_Const" constant="true"><variable name="CO_MD"><type><INT/></type><initialValue><simpleValue value="1"/></initialValue></variable><variable name="CO_MD1D2"><type><INT/></type><initialValue><simpleValue value="2"/></initialValue></variable><variable name="CO_MD_DC"><type><INT/></type><initialValue><simpleValue value="3"/></initialValue></variable><variable name="CO_MD1D2_DC"><type><INT/></type><initialValue><simpleValue value="4"/></initialValue></variable><variable name="FAN_MAX"><type><INT/></type><initialValue><simpleValue value="8"/></initialValue></variable><variable name="PUMP_MAX"><type><INT/></type><initialValue><simpleValue value="4"/></initialValue></variable><variable name="COOLER_MAX"><type><INT/></type><initialValue><simpleValue value="4"/></initialValue></variable><variable name="OIL_WARN_ON"><type><REAL/></type><initialValue><simpleValue value="95.0"/></initialValue></variable><variable name="OIL_WARN_OFF"><type><REAL/></type><initialValue><simpleValue value="90.0"/></initialValue></variable><variable name="OIL_ALARM_ON"><type><REAL/></type><initialValue><simpleValue value="105.0"/></initialValue></variable><variable name="OIL_ALARM_OFF"><type><REAL/></type><initialValue><simpleValue value="100.0"/></initialValue></variable><variable name="WND_WARN_ON"><type><REAL/></type><initialValue><simpleValue value="100.0"/></initialValue></variable><variable name="WND_WARN_OFF"><type><REAL/></type><initialValue><simpleValue value="95.0"/></initialValue></variable><variable name="WND_ALARM_ON"><type><REAL/></type><initialValue><simpleValue value="115.0"/></initialValue></variable><variable name="WND_ALARM_OFF"><type><REAL/></type><initialValue><simpleValue value="110.0"/></initialValue></variable><variable name="FAN_OIL_ON"><type><REAL/></type><initialValue><simpleValue value="40.0"/></initialValue></variable><variable name="FAN_OIL_OFF"><type><REAL/></type><initialValue><simpleValue value="35.0"/></initialValue></variable><variable name="G2_LOAD_ON"><type><REAL/></type><initialValue><simpleValue value="40.0"/></initialValue></variable><variable name="G2_LOAD_OFF"><type><REAL/></type><initialValue><simpleValue value="35.0"/></initialValue></variable><variable name="G2_TW_ON"><type><REAL/></type><initialValue><simpleValue value="75.0"/></initialValue></variable><variable name="G2_TW_OFF"><type><REAL/></type><initialValue><simpleValue value="70.0"/></initialValue></variable><variable name="G3_LOAD_ON"><type><REAL/></type><initialValue><simpleValue value="75.0"/></initialValue></variable><variable name="G3_LOAD_OFF"><type><REAL/></type><initialValue><simpleValue value="70.0"/></initialValue></variable><variable name="G3_TW_ON"><type><REAL/></type><initialValue><simpleValue value="85.0"/></initialValue></variable><variable name="G3_TW_OFF"><type><REAL/></type><initialValue><simpleValue value="80.0"/></initialValue></variable><variable name="G4_LOAD_ON"><type><REAL/></type><initialValue><simpleValue value="105.0"/></initialValue></variable><variable name="G4_LOAD_OFF"><type><REAL/></type><initialValue><simpleValue value="100.0"/></initialValue></variable><variable name="G4_TW_ON"><type><REAL/></type><initialValue><simpleValue value="95.0"/></initialValue></variable><variable name="G4_TW_OFF"><type><REAL/></type><initialValue><simpleValue value="90.0"/></initialValue></variable><variable name="R_D1"><type><WORD/></type><initialValue><simpleValue value="16#0001"/></initialValue></variable><variable name="R_D2"><type><WORD/></type><initialValue><simpleValue value="16#0002"/></initialValue></variable><variable name="R_DC"><type><WORD/></type><initialValue><simpleValue value="16#0004"/></initialValue></variable><variable name="R_GROUP_FAN"><type><WORD/></type><initialValue><simpleValue value="16#0008"/></initialValue></variable><variable name="R_GROUP_PUMP"><type><WORD/></type><initialValue><simpleValue value="16#0010"/></initialValue></variable><variable name="R_SENSOR"><type><WORD/></type><initialValue><simpleValue value="16#0020"/></initialValue></variable><variable name="R_OVERTEMP"><type><WORD/></type><initialValue><simpleValue value="16#0040"/></initialValue></variable><variable name="R_MANUAL"><type><WORD/></type><initialValue><simpleValue value="16#0080"/></initialValue></variable><variable name="R_BREAKER"><type><WORD/></type><initialValue><simpleValue value="16#0100"/></initialValue></variable><variable name="R_THERMAL"><type><WORD/></type><initialValue><simpleValue value="16#0200"/></initialValue></variable><variable name="R_UNUSED"><type><WORD/></type><initialValue><simpleValue value="16#0400"/></initialValue></variable><variable name="CFG_FAN_RANGE"><type><WORD/></type><initialValue><simpleValue value="16#0001"/></initialValue></variable><variable name="CFG_PUMP_RANGE"><type><WORD/></type><initialValue><simpleValue value="16#0002"/></initialValue></variable><variable name="CFG_COOLER_RANGE"><type><WORD/></type><initialValue><simpleValue value="16#0004"/></initialValue></variable><variable name="CFG_FANS_FOR_COOLER"><type><WORD/></type><initialValue><simpleValue value="16#0008"/></initialValue></variable><variable name="CFG_PUMPS_FOR_COOLER"><type><WORD/></type><initialValue><simpleValue value="16#0010"/></initialValue></variable><variable name="CFG_NOMINAL"><type><WORD/></type><initialValue><simpleValue value="16#0020"/></initialValue></variable><variable name="CFG_GRADIENT"><type><WORD/></type><initialValue><simpleValue value="16#0040"/></initialValue></variable><variable name="MB_PROBE"><type><REAL/></type><initialValue><simpleValue value="25.0"/></initialValue></variable></globalVars><globalVars name="GVL_HMI"><variable name="Tm"><type><REAL/></type></variable><variable name="Current"><type><REAL/></type></variable><variable name="Tw"><type><REAL/></type></variable><variable name="LoadPercent"><type><REAL/></type></variable><variable name="Kfactor"><type><REAL/></type></variable><variable name="DeltaSteady"><type><REAL/></type></variable><variable name="Theta"><type><REAL/></type></variable><variable name="TmMilliamp"><type><REAL/></type></variable><variable name="IMilliamp"><type><REAL/></type></variable><variable name="StageD1"><type><BOOL/></type></variable><variable name="StageD2"><type><BOOL/></type></variable><variable name="StageDC"><type><BOOL/></type></variable><variable name="SensorFaultTm"><type><BOOL/></type></variable><variable name="SensorFaultI"><type><BOOL/></type></variable><variable name="ConfigBits"><type><WORD/></type></variable><variable name="Failsafe"><type><BOOL/></type></variable><variable name="TransformerOn"><type><BOOL/></type></variable><variable name="WarnOil"><type><BOOL/></type></variable><variable name="AlarmOil"><type><BOOL/></type></variable><variable name="WarnWinding"><type><BOOL/></type></variable><variable name="AlarmWinding"><type><BOOL/></type></variable><variable name="Horn"><type><BOOL/></type></variable><variable name="TmFans"><type><BOOL/></type></variable><variable name="GroupPump"><type><array><dimension lower="1" upper="4"/><baseType><BOOL/></baseType></array></type></variable><variable name="FanRun"><type><array><dimension lower="1" upper="8"/><baseType><BOOL/></baseType></array></type></variable><variable name="PumpRun"><type><array><dimension lower="1" upper="4"/><baseType><BOOL/></baseType></array></type></variable><variable name="FanHours"><type><array><dimension lower="1" upper="8"/><baseType><REAL/></baseType></array></type></variable><variable name="FanStarts"><type><array><dimension lower="1" upper="8"/><baseType><UDINT/></baseType></array></type></variable><variable name="PumpHours"><type><array><dimension lower="1" upper="4"/><baseType><REAL/></baseType></array></type></variable><variable name="PumpStarts"><type><array><dimension lower="1" upper="4"/><baseType><UDINT/></baseType></array></type></variable><variable name="FanReason"><type><array><dimension lower="1" upper="8"/><baseType><WORD/></baseType></array></type></variable><variable name="PumpReason"><type><array><dimension lower="1" upper="4"/><baseType><WORD/></baseType></array></type></variable><variable name="FanFault"><type><array><dimension lower="1" upper="8"/><baseType><BOOL/></baseType></array></type></variable><variable name="PumpFault"><type><array><dimension lower="1" upper="4"/><baseType><BOOL/></baseType></array></type></variable><variable name="CoolerRole"><type><array><dimension lower="1" upper="4"/><baseType><INT/></baseType></array></type></variable><variable name="CoolerDutyHours"><type><array><dimension lower="1" upper="4"/><baseType><REAL/></baseType></array></type></variable><variable name="EffFanCount"><type><INT/></type></variable><variable name="EffPumpCount"><type><INT/></type></variable><variable name="EffCoolerCount"><type><INT/></type></variable><variable name="HasD2"><type><BOOL/></type></variable><variable name="HasDC"><type><BOOL/></type></variable><variable name="MB"><type><array><dimension lower="0" upper="255"/><baseType><WORD/></baseType></array></type></variable></globalVars><globalVars name="GVL_IO"><variable name="AI_Tm"><type><REAL/></type></variable><variable name="AI_I"><type><REAL/></type></variable><variable name="DI_Breaker"><type><BOOL/></type></variable><variable name="DI_FanOk1"><type><BOOL/></type></variable><variable name="DI_FanOk2"><type><BOOL/></type></variable><variable name="DI_FanOk3"><type><BOOL/></type></variable><variable name="DI_FanOk4"><type><BOOL/></type></variable><variable name="DI_FanOk5"><type><BOOL/></type></variable><variable name="DI_FanOk6"><type><BOOL/></type></variable><variable name="DI_FanOk7"><type><BOOL/></type></variable><variable name="DI_FanOk8"><type><BOOL/></type></variable><variable name="DI_PumpOk1"><type><BOOL/></type></variable><variable name="DI_PumpOk2"><type><BOOL/></type></variable><variable name="DI_PumpOk3"><type><BOOL/></type></variable><variable name="DI_PumpOk4"><type><BOOL/></type><initialValue><simpleValue value="TRUE"/></initialValue></variable><variable name="DO_Fan1"><type><BOOL/></type></variable><variable name="DO_Fan2"><type><BOOL/></type></variable><variable name="DO_Fan3"><type><BOOL/></type></variable><variable name="DO_Fan4"><type><BOOL/></type></variable><variable name="DO_Fan5"><type><BOOL/></type></variable><variable name="DO_Fan6"><type><BOOL/></type></variable><variable name="DO_Fan7"><type><BOOL/></type></variable><variable name="DO_Fan8"><type><BOOL/></type></variable><variable name="DO_Pump1"><type><BOOL/></type></variable><variable name="DO_Pump2"><type><BOOL/></type></variable><variable name="DO_Pump3"><type><BOOL/></type></variable><variable name="DO_Pump4"><type><BOOL/></type></variable></globalVars><globalVars name="GVL_Set" retain="true" persistent="true"><variable name="CoolingType"><type><INT/></type><initialValue><simpleValue value="2"/></initialValue></variable><variable name="Gradient"><type><REAL/></type><initialValue><simpleValue value="20.0"/></initialValue></variable><variable name="NominalCurrent"><type><REAL/></type><initialValue><simpleValue value="5.0"/></initialValue></variable><variable name="FanCount"><type><INT/></type><initialValue><simpleValue value="4"/></initialValue></variable><variable name="PumpCount"><type><INT/></type><initialValue><simpleValue value="0"/></initialValue></variable><variable name="CoolerCount"><type><INT/></type><initialValue><simpleValue value="0"/></initialValue></variable><variable name="RotationHours"><type><REAL/></type><initialValue><simpleValue value="168.0"/></initialValue></variable><variable name="AiMode"><type><INT/></type><initialValue><simpleValue value="0"/></initialValue></variable><variable name="TmAt4mA"><type><REAL/></type><initialValue><simpleValue value="0.0"/></initialValue></variable><variable name="TmAt20mA"><type><REAL/></type><initialValue><simpleValue value="150.0"/></initialValue></variable><variable name="IAt20mA"><type><REAL/></type><initialValue><simpleValue value="5.0"/></initialValue></variable><variable name="BreakerRequired"><type><BOOL/></type><initialValue><simpleValue value="TRUE"/></initialValue></variable><variable name="UseTable4"><type><BOOL/></type><initialValue><simpleValue value="TRUE"/></initialValue></variable><variable name="Group1AtIdle"><type><BOOL/></type><initialValue><simpleValue value="TRUE"/></initialValue></variable><variable name="UseMotorFaults"><type><BOOL/></type><initialValue><simpleValue value="FALSE"/></initialValue></variable><variable name="ExponentY"><type><REAL/></type><initialValue><simpleValue value="1.2"/></initialValue></variable><variable name="TauSec"><type><REAL/></type><initialValue><simpleValue value="480.0"/></initialValue></variable><variable name="Simulation"><type><BOOL/></type><initialValue><simpleValue value="FALSE"/></initialValue></variable><variable name="SimTm"><type><REAL/></type><initialValue><simpleValue value="40.0"/></initialValue></variable><variable name="SimCurrent"><type><REAL/></type><initialValue><simpleValue value="0.0"/></initialValue></variable><variable name="Manual"><type><BOOL/></type><initialValue><simpleValue value="FALSE"/></initialValue></variable><variable name="ManualFan"><type><array><dimension lower="1" upper="8"/><baseType><BOOL/></baseType></array></type></variable><variable name="ManualPump"><type><array><dimension lower="1" upper="4"/><baseType><BOOL/></baseType></array></type></variable><variable name="Ack"><type><BOOL/></type><initialValue><simpleValue value="FALSE"/></initialValue></variable><variable name="ResetHours"><type><BOOL/></type><initialValue><simpleValue value="FALSE"/></initialValue></variable><variable name="ResetTheta"><type><BOOL/></type><initialValue><simpleValue value="FALSE"/></initialValue></variable><variable name="SwapWords"><type><BOOL/></type><initialValue><simpleValue value="FALSE"/></initialValue></variable></globalVars><globalVars name="GVL_Visu"><variable name="BtnAck"><type><BOOL/></type></variable><variable name="BtnResetHours"><type><BOOL/></type></variable><variable name="BtnResetTheta"><type><BOOL/></type></variable><variable name="BannerCode"><type><INT/></type></variable><variable name="Heartbeat"><type><WORD/></type></variable></globalVars>
+        </resource>
+      </configuration>
+    </configurations>
+  </instances>
+</project>
